@@ -5,20 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PSEM-VISAYAS CHAPTER MEMBERSHIP STATUS LOOK-UP</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        input { padding: 10px; margin-top: 10px; }
-        button { padding: 10px; margin-top: 10px; }
-        .result { margin-top: 20px; }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center horizontally */
+        }
+        input {
+            padding: 10px;
+            margin-top: 10px;
+        }
+        button {
+            padding: 10px;
+            margin-top: 10px;
+        }
+        .result {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
     <h1>PSEM-VISAYAS CHAPTER MEMBERSHIP STATUS LOOK-UP</h1>
-
     <p>Enter your full name in the format LAST NAME, FIRST NAME, using ALL CAPS.<br>Example: DELA CRUZ, JUAN</p>
-    <input type="text" id="nameInput" placeholder="Enter full name" />
+    <input type="text" id="nameInput" placeholder="(LAST, First Name)" />
     <button onclick="checkMembership()">Check Status</button>
     <div class="result" id="result"></div>
-</body>    
+</body>
     <script>
     let membershipData = {};
 
