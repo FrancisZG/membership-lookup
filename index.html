@@ -17,11 +17,11 @@
     <button onclick="checkMembership()">Check Status</button>
     <div class="result" id="result"></div>
     
-    <script>
+   <script>
     let membershipData = {};
 
     async function fetchMembershipData() {
-        const response = await fetch('https://github.com/FrancisZG/membership-lookup/blob/main/db.csv');
+        const response = await fetch('https://raw.githubusercontent.com/FrancisZG/membership-lookup/main/db.csv');
         const data = await response.text();
         const rows = data.split('\n').slice(1); // Skip header
         rows.forEach(row => {
@@ -34,40 +34,33 @@
         console.log(membershipData); // Check loaded data
     }
 
+    fetchMembershipData();
+
     function checkMembership() {
-    const name = document.getElementById("nameInput").value;
-    const status = membershipData[name] || "Not found"; // Look up by constructed full name
-    const resultElement = document.getElementById("result");
+        const name = document.getElementById("nameInput").value;
+        const status = membershipData[name] || "Not found"; // Look up by constructed full name
+        const resultElement = document.getElementById("result");
 
-    // Clear previous results
-    resultElement.innerHTML = ''; 
+        resultElement.innerText = `Membership Status: ${status}`;
 
-    // Create a span for the status text
-    const statusSpan = document.createElement('span');
-    statusSpan.innerText = `Membership Status: ${status}`;
-    
-    // Change text color based on status
-    switch (status.toUpperCase()) {
-        case "ACTIVE":
-        case "LIFETIME":
-            statusSpan.style.color = "blue";
-            break;
-        case "INACTIVE":
-            statusSpan.style.color = "red";
-            break;
-        case "TRANSFERRED":
-            statusSpan.style.color = "black";
-            break;
-        default:
-            statusSpan.style.color = "black"; // Default for "Not found"
+        // Change text color based on status
+        switch (status.toUpperCase()) {
+            case "ACTIVE":
+            case "LIFETIME":
+                resultElement.style.color = "blue";
+                break;
+            case "INACTIVE":
+                resultElement.style.color = "red";
+                break;
+            case "TRANSFERRED":
+                resultElement.style.color = "black";
+                break;
+            default:
+                resultElement.style.color = "black"; // Default for "Not found"
+        }
     }
-
-    // Append the status text to the result element
-    resultElement.appendChild(document.createTextNode("Membership Status: "));
-    resultElement.appendChild(statusSpan);
-}
-    
 </script>
+
 
 </body>
 </html>
