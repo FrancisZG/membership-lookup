@@ -23,12 +23,12 @@
     async function fetchMembershipData() {
         const response = await fetch('https://raw.githubusercontent.com/<your-username>/<repository-name>/main/members.csv');
         const data = await response.text();
-        const rows = data.split('\n').slice(1);
+        const rows = data.split('\n').slice(1); // Skip header row
         rows.forEach(row => {
-            const [lastName, firstName, , , status] = row.split(','); // Skip middle name and suffix
+            const [lastName, firstName, , , status] = row.split(','); // Only take necessary columns
             if (lastName && firstName) {
-                const fullName = `${lastName.trim()}, ${firstName.trim()}`; // Construct based only on last and first names
-                membershipData[fullName] = status.trim();
+                const fullName = `${lastName.trim()}, ${firstName.trim()}`; // Construct name
+                membershipData[fullName] = status.trim(); // Store status
             }
         });
     }
@@ -37,7 +37,7 @@
 
     function checkMembership() {
         const name = document.getElementById("nameInput").value;
-        const status = membershipData[name] || "Not found";
+        const status = membershipData[name] || "Not found"; // Look up by full name
         document.getElementById("result").innerText = `Membership Status: ${status}`;
     }
 </script>
