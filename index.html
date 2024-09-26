@@ -36,28 +36,28 @@
     fetchMembershipData();
 
     function checkMembership() {
-        const name = document.getElementById("nameInput").value;
-        const status = membershipData[name] || "Not found"; // Look up by constructed full name
-        const resultElement = document.getElementById("result");
-        
-        resultElement.innerText = `Membership Status: ${status}`;
+    const name = document.getElementById("nameInput").value;
+    const status = membershipData[name] || "Not found"; // Look up by constructed full name
+    const resultElement = document.getElementById("result");
 
-        // Change text color based on status
-        switch (status) {
-            case "ACTIVE":
-            case "LIFETIME":
-                resultElement.style.color = "blue";
-                break;
-            case "INACTIVE":
-                resultElement.style.color = "red";
-                break;
-            case "TRANSFERRED":
-                resultElement.style.color = "black";
-                break;
-            default:
-                resultElement.style.color = "black"; // Default color for "Not found"
-        }
+    resultElement.innerText = `Membership Status: ${status}`;
+
+    // Change text color based on status
+    switch (status.toUpperCase()) { // Convert to uppercase for comparison
+        case "ACTIVE":
+        case "LIFETIME":
+            resultElement.style.color = "blue";
+            break;
+        case "INACTIVE":
+            resultElement.style.color = "red";
+            break;
+        case "TRANSFERRED":
+            resultElement.style.color = "black";
+            break;
+        default:
+            resultElement.style.color = "black"; // Default for "Not found"
     }
+}
 </script>
 
 </body>
