@@ -16,21 +16,22 @@
     <input type="text" id="nameInput" placeholder="Enter full name" />
     <button onclick="checkMembership()">Check Status</button>
     <div class="result" id="result"></div>
-
+    
     <script>
     let membershipData = {};
 
     async function fetchMembershipData() {
-        const response = await fetch('https://github.com/FrancisZG/membership-lookup/blob/main/db.csv');
+        const response = await fetch('https://raw.githubusercontent.com/FrancisZG/membership-lookup/main/db.csv');
         const data = await response.text();
-        const rows = data.split('\n').slice(1); // Skip the header row
+        const rows = data.split('\n').slice(1); // Skip header
         rows.forEach(row => {
             const [lastName, firstName, , , status] = row.split(','); // Read necessary columns only
             if (lastName && firstName) {
                 const fullName = `${lastName.trim()}, ${firstName.trim()}`; // Create key from last and first names
-                membershipData[fullName] = status.trim(); // Store membership status
+                membershipData[fullName] = status.trim(); // Store status
             }
         });
+        console.log(membershipData); // Check loaded data
     }
 
     fetchMembershipData();
@@ -38,7 +39,25 @@
     function checkMembership() {
         const name = document.getElementById("nameInput").value;
         const status = membershipData[name] || "Not found"; // Look up by constructed full name
-        document.getElementById("result").innerText = `Membership Status: ${status}`;
+        const resultElement = document.getElementById("result");
+
+        resultElement.innerText = `Membership Status: ${status}`;
+
+        // Change text color based on status
+        switch (status.toUpperCase()) {
+            case "ACTIVE":
+            case "LIFETIME":
+                resultElement.style.color = "blue";
+                break;
+            case "INACTIVE":
+                resultElement.style.color = "red";
+                break;
+            case "TRANSFERRED":
+                resultElement.style.color = "black";
+                break;
+            default:
+                resultElement.style.color = "black"; // Default for "Not found"
+        }
     }
 </script>
 
