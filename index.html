@@ -21,14 +21,14 @@
     let membershipData = {};
 
     async function fetchMembershipData() {
-        const response = await fetch('https://raw.githubusercontent.com/<your-username>/<repository-name>/main/members.csv');
+        const response = await fetch('https://raw.githubusercontent.com/franciszg/membership-lookup/main/db.csv');
         const data = await response.text();
-        const rows = data.split('\n').slice(1); // Skip header row
+        const rows = data.split('\n').slice(1); // Skip the header row
         rows.forEach(row => {
-            const [lastName, firstName, , , status] = row.split(','); // Only take necessary columns
+            const [lastName, firstName, , , status] = row.split(','); // Read necessary columns only
             if (lastName && firstName) {
-                const fullName = `${lastName.trim()}, ${firstName.trim()}`; // Construct name
-                membershipData[fullName] = status.trim(); // Store status
+                const fullName = `${lastName.trim()}, ${firstName.trim()}`; // Create key from last and first names
+                membershipData[fullName] = status.trim(); // Store membership status
             }
         });
     }
@@ -37,10 +37,11 @@
 
     function checkMembership() {
         const name = document.getElementById("nameInput").value;
-        const status = membershipData[name] || "Not found"; // Look up by full name
+        const status = membershipData[name] || "Not found"; // Look up by constructed full name
         document.getElementById("result").innerText = `Membership Status: ${status}`;
     }
 </script>
+
 
 </body>
 </html>
