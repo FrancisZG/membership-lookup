@@ -21,7 +21,7 @@
         let membershipData = {};
 
         async function fetchMembershipData() {
-            const response = await fetch('https://raw.githubusercontent.com/franciszg/membership-lookup/main/db.csv');
+            const response = await fetch('https://github.com/FrancisZG/membership-lookup/blob/main/db.csv');
             const data = await response.text();
             const rows = data.split('\n').slice(1); // Skip header
             rows.forEach(row => {
